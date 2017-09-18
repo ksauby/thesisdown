@@ -1,3 +1,8 @@
+```{r setup, include=FALSE, echo=F}
+opts_chunk$set(echo=F, message=F, warning=F)
+```
+
+
 # Preliminary Content {-}
 
 ## Acknowledgements {-}

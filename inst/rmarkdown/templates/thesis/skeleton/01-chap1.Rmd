@@ -51,7 +51,7 @@ This should be a new paragraph.
 
 When you click the **Knit** button above a document will be generated that includes both content as well as the output of any embedded **R** code chunks within the document. You can embed an **R** code chunk like this (`cars` is a built-in **R** dataset):
 
-```{r cars}
+```{r cars, echo=F}
 summary(cars)
 ```
 
@@ -91,20 +91,20 @@ Included in this template is a file called `flights.csv`.  This file includes a 
 
 We can load in this data set using the following command:
 
-```{r load_data}
+```{r load_data, echo=F}
 flights <- read.csv("data/flights.csv")
 ```
 
 The data is now stored in the data frame called `flights` in **R**.  To get a better feel for the variables included in this dataset we can use a variety of functions.  Here we can see the dimensions (rows by columns) and also the names of the columns.
 
-```{r str}
+```{r str, echo=F}
 dim(flights)
 names(flights)
 ```
 
 Another good idea is to take a look at the dataset in table form.  With this dataset having more than 50,000 rows, we won't explicitly show the results of the command here.  I recommend you enter the command into the Console **_after_** you have run the **R** chunks above to load the data into **R**.
 
-```{r view_flights, eval=FALSE}
+```{r view_flights, eval=FALSE, echo=F}
 View(flights)
 ```
 
@@ -112,7 +112,7 @@ While not required, it is highly recommended you use the `dplyr` package to mani
 
 We begin by checking to ensure that needed packages are installed and then we load them into our current working environment:
 
-```{r load_pkgs, message=FALSE}
+```{r load_pkgs, message=FALSE, echo=F}
 # List of packages required for this analysis
 pkg <- c("dplyr", "ggplot2", "knitr", "bookdown", "devtools")
 # Check if packages are not installed and assign the
@@ -134,7 +134,7 @@ The example we show here does the following:
 
 - Using `flights2`, we determine the largest arrival delay for each of the carriers.
 
-```{r max_delays}
+```{r max_delays, echo=F}
 flights2 <- flights %>% 
   select(carrier_name, arr_delay)
 max_delays <- flights2 %>% 
@@ -144,7 +144,7 @@ max_delays <- flights2 %>%
 
 A useful function in the `knitr` package for making nice tables in _R Markdown_ is called `kable`.  It is much easier to use than manually entering values into a table by copying and pasting values into Excel or LaTeX.  This again goes to show how nice reproducible documents can be! (Note the use of `results="asis"`, which will produce the table instead of the code to create the table.)  The `caption.short` argument is used to include a shorter title to appear in the List of Tables.
 
-```{r maxdelays, results="asis"}
+```{r maxdelays, results="asis", echo=F}
 kable(max_delays, 
       col.names = c("Airline", "Max Arrival Delay"),
       caption = "Maximum Delays by Airline",
@@ -158,7 +158,7 @@ The last two options make the table a little easier-to-read.
 We can further look into the properties of the largest value here for American Airlines Inc.  To do so, we can isolate the row corresponding to the arrival delay of 1539 minutes for American in our original `flights` dataset.
 
 
-```{r max_props}
+```{r max_props, echo=F}
 flights %>% filter(arr_delay == 1539, 
                   carrier_name == "American Airlines Inc.") %>%
   select(-c(month, day, carrier, dest_name, hour, 
@@ -167,7 +167,7 @@ flights %>% filter(arr_delay == 1539,
 
 We see that the flight occurred on March 3rd and departed a little after 2 PM on its way to Dallas/Fort Worth.  Lastly, we show how we can visualize the arrival delay of all departing flights from Portland on March 3rd against time of departure.
 
-```{r march3plot, fig.height=3, fig.width=6}
+```{r march3plot, fig.height=3, fig.width=6, echo=F}
 flights %>% filter(month == 3, day == 3) %>%
   ggplot(aes(x = dep_time, y = arr_delay)) + geom_point()
 ```
