@@ -2,6 +2,10 @@
 
 `r if(!knitr:::is_latex_output()) '# (APPENDIX) Appendix {-}'` 
 
+
+\addtocontents{toc}{\protect\addvspace{10pt}\noindent{APPENDIX} \protect\hfill\par}{}
+	
+	
 <!--
 If you feel it necessary to include an appendix, it goes here.
 -->
