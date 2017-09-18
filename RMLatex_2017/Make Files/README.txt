@@ -1,7 +1,0 @@
-Use the appropriate Make File to compile your Thesis or Dissertation. The "Makefile" is a Linux file and has not been tested by ASC and may need some revision to work on the latest version of the TEX System. the "makepdf.sh" is a Macintosh script to be used in Terminal using the command "bash makepdf.sh main.tex" after navigating to the folder containing the "main.tex" file.
-
-The .bat files are all windows batch files and can be run by double-clicking on thier icons. "make_xelatex" should compile the main.tex file if you have the latest version of MikTeX or TexLive. The "make_2" file is to be used if you have changed the main.tex file name and will prompt you for the new file name before it compiles.
-
-The make_dvipdfm and make_dvipdfmx files are in case you have an older version of TEX and don't want to upgrade for a particular reason. You will be much more limited regarding your graphics options and you will  have to put either dvipdfm or dvipdfmx in both the preamble of the main document and in front of the graphix package and the hyperref package (in the packages.tex file). An example is commented out for all three of these locations.
-
-Move the correct make file to the same level as your main file and compile using your system preferred method of activating these files. Don't hesitate to contact the Application Support Center (asc-hd@ufl.edu or 352-392-HELP[4357]) if you have any problems.
