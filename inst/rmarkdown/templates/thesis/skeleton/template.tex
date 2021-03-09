@@ -1,6 +1,70 @@
-\documentclass[12pt,final,CPage]{ufthesis}
+% This is an unofficial LaTex thesis template designed to be used with ismayc's thesisdown package. It is based on the Reed College thesis template.
 
-\include{packages}
+% This is the Reed College LaTeX thesis template. Most of the work
+% for the document class was done by Sam Noble (SN), as well as this
+% template. Later comments etc. by Ben Salzberg (BTS). Additional
+% restructuring and APA support by Jess Youngberg (JY).
+% Your comments and suggestions are more than welcome; please email
+% them to cus@reed.edu
+%
+% See https://www.reed.edu/cis/help/LaTeX/index.html for help. There are a
+% great bunch of help pages there, with notes on
+% getting started, bibtex, etc. Go there and read it if you're not
+% already familiar with LaTeX.
+%
+% Any line that starts with a percent symbol is a comment.
+% They won't show up in the document, and are useful for notes
+% to yourself and explaining commands.
+% Commenting also removes a line from the document;
+% very handy for troubleshooting problems. -BTS
+
+% As far as I know, this follows the requirements laid out in
+% the 2002-2003 Senior Handbook. Ask a librarian to check the
+% document before binding. -SN
+
+%%
+%% Preamble
+%%
+% \documentclass{<something>} must begin each LaTeX document
+\documentclass[12pt,final,CPage]{ufthesis}
+% Packages are extensions to the basic LaTeX functions. Whatever you
+% want to typeset, there is probably a package out there for it.
+% Chemistry (chemtex), screenplays, you name it.
+% Check out CTAN to see: https://www.ctan.org/
+\usepackage{graphicx,latexsym}
+\usepackage{amsmath}
+\usepackage{amssymb,amsthm}
+\usepackage{algpseudocode}
+\usepackage{tabularx}
+\usepackage[letterpaper,hmargin=1in,vmargin=1in]{geometry}
+\usepackage{lscape}
+\usepackage{longtable,booktabs,setspace}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{subfigure}
+\usepackage{rotating}
+\usepackage{calc}
+\usepackage{setspace}
+\usepackage{ufenumerate}
+\usepackage{latexsym}
+\usepackage{epsf}
+\usepackage{epsfig}
+\usepackage{euscript}
+\usepackage[format=hang,justification=raggedright,singlelinecheck=0,labelsep=period]{caption}
+\usepackage[numbers,sort&compress]{natbib} %Use this set-up for numbered reference lists
+\usepackage{chemarr} %% Useful for one reaction arrow, useless if you're not a chem major
+\usepackage[hyphens]{url}
+\usepackage{lmodern}
+\usepackage{float}
+\floatplacement{figure}{H}
+\usepackage{calc}
+\usepackage{rotating}
+\usepackage[hyperfootnotes=false]{hyperref}
+%\usepackage[dvipdfmx,hyperfootnotes=false]{hyperref}
+%\usepackage[dvips,hyperfootnotes=false]{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue,anchorcolor=blue,citecolor=blue,filecolor=blue,urlcolor=blue,bookmarksnumbered=true,pdfview=FitB} %
+% % %DO NOT PLACE ANY PACKAGES AFTER THE HYPERREF SET UP
 
 \def\UrlFont{\rmfamily}
 
@@ -8,18 +72,94 @@
 \renewcommand{\textfraction}{0.1}
 \renewcommand{\floatpagefraction}{0.75}
 
-\SetFullName{Kristen Sauby}
+\SetFullName{$author$}
 \SetThesisType{Dissertation}
-\SetDegreeType{Doctor of Philosophy}
-\SetGradMonth{December}
-\SetGradYear{2017}
-\SetDepartment{Electronic Thesis and Dissertations}
-\SetChair{James B. Albury}
-\SetCochair{John W. Carver III}
+\SetDegreeType{$degree$}
+\SetGradMonth{$month$}
+\SetGradYear{$date$}
+\SetDepartment{$department$}
+\SetChair{$advisor$}
 
-\SetTitle{UF ETD \LaTeXe  THESIS AND DISSERTATION TEMPLATE TUTORIAL}
+$if(altadvisor)$
+\SetCochair{$altadvisor$}
+$endif$
 
-\include{usersetcommands}
+\SetTitle{$title$}
+
+% user defined commands %
+% Here is where you define optional commands such as macros, new commands,
+% and new environments to be used in your paper
+
+% optional command to prevent a word from breaking across a line %
+\hyphenchar\font=-1
+
+
+% Commands to produce proper bullet list
+\newlength{\widthOfItem}
+\let\Itemize=\itemize
+\let\endItemize=\enditemize
+\renewenvironment{itemize}{%
+	\begin{Itemize}
+		\setlength{\itemsep}{0.5\baselineskip}
+		\setlength{\labelwidth}{2em}
+		\setlength{\listparindent}{.32in}%
+		\setlength{\leftmargin}{.32in}
+		\setlength{\rightmargin}{0in}
+		\settowidth{\widthOfItem}{\labelitemi}
+		\setlength{\labelsep}{\leftmargin-\widthOfItem}
+		\renewcommand{\labelitemii}{--}
+		\singlespacing}{%
+	\end{Itemize}}
+
+% shortcut for setting up inserting \prime command in mathmode to avoid errors %
+\newcommand{\p}{^{\prime}}
+
+% shortcuts for prime color text
+\newcommand{\red}{\textcolor[rgb]{1.00,0.00,0.00}}
+\newcommand{\green}{\textcolor[rgb]{0.00,1.00,0.00}}
+\newcommand{\blue}{\textcolor[rgb]{0.00,0.00,1.00}}
+
+% Shorcut commands for mathmatical formulas %
+
+\newcommand{\latex}{\LaTeX 2\ensuremath{\epsilon}}
+
+% THEOREM Environments ---------------------------------------------------
+%These environments are provided as a convenience - feel free to modify if needed
+
+%\newtheorem{theorem}{Theorem}[chapter]%To link the theorem to each chapter uncomment the chapter option
+%\newtheorem{lemma}{Lemma}%[theorem]% To link each lemma to a theorem uncomment the theorem option
+%\newtheorem{corollary}{Corollary}%[theorem]% To link each corollary to a theorem uncomment the theorem option
+% to link a corollary to a chapter change the theorem option to chapter
+%\newtheorem{definition}{Definition}%[chapter] %the same is true for both definitions and assumptions
+%\newtheorem{assumption}{Assumption}%[chapter] %
+%\newtheorem{proposition}{Proposition}[chapter]
+%\newtheorem{algorithm}{Algorithm}[chapter]
+
+
+
+
+%These were some user commands I've run across that I thought some might want to incorporate into their work
+%\newcommand{\bdm}{
+ %   \begin{displaymath}}
+
+%\newcommand{\edm}{
+%    \end{displaymath}}
+
+%\newcommand{\be}{
+%    \begin{equation}}
+
+%\newcommand{\ee}{
+%    \end{equation}}
+
+%\newcommand{\bea}{
+ %   \begin{eqnarray}}
+
+%\newcommand{\eea}{
+%    \end{eqnarray}}
+
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 
 % From {rticles}
 $if(csl-refs)$
@@ -29,21 +169,21 @@ $if(csl-refs)$
 \setlength{\cslhangindent}{1.5em}
 % for Pandoc 2.8 to 2.10.1
 \newenvironment{cslreferences}%
-{$if(csl-hanging-indent)$\setlength{\parindent}{0pt}%
-	\everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces$endif$}%
-{\par}
+  {$if(csl-hanging-indent)$\setlength{\parindent}{0pt}%
+  \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces$endif$}%
+  {\par}
 % For Pandoc 2.11+
 \newenvironment{CSLReferences}[3] % #1 hanging-ident, #2 entry spacing
-{% don't indent paragraphs
-	\setlength{\parindent}{0pt}
-	% turn on hanging indent if param 1 is 1
-	\ifodd #1 \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces\fi
-	% set entry spacing
-	\ifnum #2 > 0
-	\setlength{\parskip}{#2\baselineskip}
-	\fi
-}%
-{}
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1 \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces\fi
+  % set entry spacing
+  \ifnum #2 > 0
+  \setlength{\parskip}{#2\baselineskip}
+  \fi
+ }%
+ {}
 \usepackage{calc} % for calculating minipage widths
 \newcommand{\CSLBlock}[1]{#1\hfill\break}
 \newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
@@ -54,28 +194,39 @@ $endif$
 
 \begin{document}
 
-\bibliographystyle{IEEEtran}
-
 \maketitle
 \makecopyright
 
-\dedication{dedication}
-\include{acknowledgements}
-\include{TOC}
+\dedication{$dedication$}
+\acknowledge{$acknowledgements$}
+
+$if(toc)$
+% This creates your table of contents
+% the pdfbookmark line adds the word to the bookmarks of the pdf without adding it to the TOC itself
+\pdfbookmark[0]{TABLE OF CONTENTS}{tableofcontents}
+\tableofcontents %
+% Produced list of abbreviations or symbols %
+%\printindex[keylist]{KEY TO ABBREVIATIONS}{KEY TO ABBREVIATIONS}{}
+%\printindex[mathlist]{KEY TO SYMBOLS}{KEY TO SYMBOLS}{%
+%The list shown below gives a brief description of the major mathematical symbols defined in this work. For each
+%symbol, the page number corresponds to the place where the symbol is first used.} %
+$endif$
+
+% This creates your list of figures
+$if(lot)$
+\listoftables %
+$endif$
+
+% This creates your list of tables
+$if(lof)$
+%\setcounter{lofdepth}{2}
+\listoffigures %
+$endif$
+
+\abstract{$abstract$}
 \addtocontents{toc}{\protect\addvspace{10pt}\noindent{CHAPTER}\protect\hfill\par}{}
 \phantomsection
 
-% this stuff is in bookdown.yml?
-
-% \include{tex/abstract}
-% \include{tex/chapter1}
-% \include{tex/chapter2}
-% \include{tex/chapter3}
-% \include{tex/chapter4}
-% \include{tex/chapter5}
-% \include{tex/TwoOrMoreAppendices}
-
-% maybe this looks at bookdown.yml
 
 $body$
 
