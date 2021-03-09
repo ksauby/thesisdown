@@ -539,7 +539,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%        Acknowledgments                         %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\acknowledgname}{ACKNOWLEDGMENTS}%
+\newcommand{\acknowledgname}{ACKNOWLEDGEMENTS}%
 \newcommand{\acknowledge}[1]{%
     \setboolean{SetDSpace}{true}%
     \begin{simpleenv}{#1}{}{}{}%
