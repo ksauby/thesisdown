@@ -8,7 +8,7 @@ If you'd like to change the name of the bibliography to something else,
 delete "References" and replace it.
 -->
 
-# References {-}
+# REFERENCES {-}
 <!--
 This manually sets the header for this unnumbered chapter.
 -->
