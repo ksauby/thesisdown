@@ -46,8 +46,8 @@ preface: |
   This is an example of a thesis setup to use the reed thesis document class 
   (for LaTeX) and the R bookdown package, in general.
   
-keywords: keywords
-subject: subject
+keywords: keywords #this isn't implemented yet
+subject: subject #also not implemented
 
 # Specify the location of the bibliography below
 bibliography: bib/thesis.bib
