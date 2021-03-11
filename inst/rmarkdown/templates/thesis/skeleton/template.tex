@@ -1,165 +1,76 @@
-% This is an unofficial LaTex thesis template designed to be used with ismayc's thesisdown package. It is based on the Reed College thesis template.
+\documentclass{ufdissertation}\sloppy
 
-% This is the Reed College LaTeX thesis template. Most of the work
-% for the document class was done by Sam Noble (SN), as well as this
-% template. Later comments etc. by Ben Salzberg (BTS). Additional
-% restructuring and APA support by Jess Youngberg (JY).
-% Your comments and suggestions are more than welcome; please email
-% them to cus@reed.edu
-%
-% See https://www.reed.edu/cis/help/LaTeX/index.html for help. There are a
-% great bunch of help pages there, with notes on
-% getting started, bibtex, etc. Go there and read it if you're not
-% already familiar with LaTeX.
-%
-% Any line that starts with a percent symbol is a comment.
-% They won't show up in the document, and are useful for notes
-% to yourself and explaining commands.
-% Commenting also removes a line from the document;
-% very handy for troubleshooting problems. -BTS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%                 User Package and Style File loading.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% As far as I know, this follows the requirements laid out in
-% the 2002-2003 Senior Handbook. Ask a librarian to check the
-% document before binding. -SN
+%\usepackage{CustomMacros}%  This is a user macro/style file.
 
-%%
-%% Preamble
-%%
-% \documentclass{<something>} must begin each LaTeX document
-\documentclass[12pt,final,CPage]{ufthesis}
-% Packages are extensions to the basic LaTeX functions. Whatever you
-% want to typeset, there is probably a package out there for it.
-% Chemistry (chemtex), screenplays, you name it.
-% Check out CTAN to see: https://www.ctan.org/
-\usepackage{graphicx,latexsym}
-\usepackage{amsmath}
-\usepackage{amssymb,amsthm}
-\usepackage{algpseudocode}
-\usepackage{tabularx}
-\usepackage[letterpaper,hmargin=1in,vmargin=1in]{geometry}
-\usepackage{lscape}
-\usepackage{longtable,booktabs,setspace}
-\usepackage{amsfonts}
-\usepackage{amssymb}
+\usepackage{tikz}%       tikz is used by almost everyone, but certainly by me for this.
+\usepackage{pgfplots}%   pgfplots is tikz but better.
 \usepackage{booktabs}
-\usepackage{subfigure}
-\usepackage{rotating}
-\usepackage{calc}
-\usepackage{setspace}
-\usepackage{ufenumerate}
-\usepackage{latexsym}
-\usepackage{epsf}
-\usepackage{epsfig}
-\usepackage{euscript}
-\usepackage[format=hang,justification=raggedright,singlelinecheck=0,labelsep=period]{caption}
-\usepackage[numbers,sort&compress]{natbib} %Use this set-up for numbered reference lists
-\usepackage{chemarr} %% Useful for one reaction arrow, useless if you're not a chem major
-\usepackage[hyphens]{url}
-\usepackage{lmodern}
-\usepackage{float}
-\floatplacement{figure}{H}
-\usepackage{calc}
-\usepackage{rotating}
-\usepackage[hyperfootnotes=false]{hyperref}
-%\usepackage[dvipdfmx,hyperfootnotes=false]{hyperref}
-%\usepackage[dvips,hyperfootnotes=false]{hyperref}
-\hypersetup{colorlinks=true,linkcolor=blue,anchorcolor=blue,citecolor=blue,filecolor=blue,urlcolor=blue,bookmarksnumbered=true,pdfview=FitB} %
-% % %DO NOT PLACE ANY PACKAGES AFTER THE HYPERREF SET UP
-
-\def\UrlFont{\rmfamily}
-
-\renewcommand{\topfraction}{0.85}
-\renewcommand{\textfraction}{0.1}
-\renewcommand{\floatpagefraction}{0.75}
-
-\SetFullName{$author$}
-\SetThesisType{Dissertation}
-\SetDegreeType{$degree$}
-\SetGradMonth{$month$}
-\SetGradYear{$date$}
-\SetDepartment{$department$}
-\SetChair{$advisor$}
-
-$if(altadvisor)$
-\SetCochair{$altadvisor$}
-$endif$
-
-\SetTitle{$title$}
-
-% user defined commands %
-% Here is where you define optional commands such as macros, new commands,
-% and new environments to be used in your paper
-
-% optional command to prevent a word from breaking across a line %
-\hyphenchar\font=-1
+\usepackage{makecell}
+%\usepackage{amsrefs}%   amsrefs contains the .bibtex style content for mathematician papers.
 
 
-% Commands to produce proper bullet list
-\newlength{\widthOfItem}
-\let\Itemize=\itemize
-\let\endItemize=\enditemize
-\renewenvironment{itemize}{%
-	\begin{Itemize}
-		\setlength{\itemsep}{0.5\baselineskip}
-		\setlength{\labelwidth}{2em}
-		\setlength{\listparindent}{.32in}%
-		\setlength{\leftmargin}{.32in}
-		\setlength{\rightmargin}{0in}
-		\settowidth{\widthOfItem}{\labelitemi}
-		\setlength{\labelsep}{\leftmargin-\widthOfItem}
-		\renewcommand{\labelitemii}{--}
-		\singlespacing}{%
-	\end{Itemize}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%                     User Configuration commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% shortcut for setting up inserting \prime command in mathmode to avoid errors %
-\newcommand{\p}{^{\prime}}
+%% Uncomment the relevant line below if you have tables or figures.
+\haveTablestrue%        Uncomment this if you have tables in your thesis.
+\haveFigurestrue%       Uncomment this if you have figures in your thesis.
+%\haveObjectstrue%       Uncomment this if you have Objects in your thesis. This is almost certainly not the case however.
 
-% shortcuts for prime color text
-\newcommand{\red}{\textcolor[rgb]{1.00,0.00,0.00}}
-\newcommand{\green}{\textcolor[rgb]{0.00,1.00,0.00}}
-\newcommand{\blue}{\textcolor[rgb]{0.00,0.00,1.00}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Below are the commands to set the degree type, department, graduation time, and chair.
+%       Most of these are self explanatory.
+%       Note: The \chair command takes an optional argument for a cochair.
+%           So if John was your chair and Jacob was a cochair, you would use \chair[Jacob]{John}.
+%           If John was your chair and you had no cochair, you can simply use \chair{John}.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Shorcut commands for mathmatical formulas %
+\title{$title$}%  Put your title here.
 
-\newcommand{\latex}{\LaTeX 2\ensuremath{\epsilon}}
-
-% THEOREM Environments ---------------------------------------------------
-%These environments are provided as a convenience - feel free to modify if needed
-
-%\newtheorem{theorem}{Theorem}[chapter]%To link the theorem to each chapter uncomment the chapter option
-%\newtheorem{lemma}{Lemma}%[theorem]% To link each lemma to a theorem uncomment the theorem option
-%\newtheorem{corollary}{Corollary}%[theorem]% To link each corollary to a theorem uncomment the theorem option
-% to link a corollary to a chapter change the theorem option to chapter
-%\newtheorem{definition}{Definition}%[chapter] %the same is true for both definitions and assumptions
-%\newtheorem{assumption}{Assumption}%[chapter] %
-%\newtheorem{proposition}{Proposition}[chapter]
-%\newtheorem{algorithm}{Algorithm}[chapter]
+\degreeType{Doctorate of Philosophy}%   Official name of your degree; eg "Doctorate of Philosophy".
+\major{$department$}%                    Your official Department
+\author{$author$}%                  Your Name
+\thesisType{Dissertation}%              Dissertation (PhD) or Thesis (Masters)
+\degreeYear{$date$}%                      Intended graduation year (not the year you submit the thesis)
+\degreeMonth{$month$}%                   Month of graduation should be May, August, or December.
+\chair[$altadvisor$]{$advisor$}%                   Chair and Cochair (see comment block above).
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% For each of the following, type in the name of the file that contains each section.
+%       They are assumed to be tex files, but if they aren't the command takes an optional argument for the extension.
+%       So, you could load dedication.tex as your dedication file using \setDedicationFile{dedication}
+%       You could load dedication.txt instead with \setDedicationFile[txt]{dedication}.
+%       NOTE: For some compilers they may or may not add a .tex to the end of the file automatically.
+%           If you get a "couldn't find dedication.tex.tex" type error, try the command with an empty optional argument,
+%           e.g. \setDedicationFile[]{dedication}
+%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% These are REQUIRED sections; easiest to do via these commands.
+
+\setDedicationFile{dedicationFile}%                 Dedication Page
+\setAcknowledgementsFile{acknowledgementsFile}%     Acknowledgements Page
+\setAbstractFile{abstractFile}%                     Abstract Page (This should only include the abstract itself)
+\setReferenceFile{referenceFile}{amsplain}%         References. First argument is your bibtex source file
+%                                                       the second argument is your bibtex style file.
+\setBiographicalFile{biographyFile}%                Biography file of the Author (you).
+
+%%% These are NOT required, so only use them if you actually need/have them.
+
+\setAbbreviationsFile{abbreviations}%           Abbreviations Page
+\setAppendixFile{appendix}%                     Appendix Content; hyperlinking might be weird.
+\multipleAppendixtrue%                          Uncomment this if you have more than one appendix,
+%                                                   comment it if you have only one appendix.
 
 
-%These were some user commands I've run across that I thought some might want to incorporate into their work
-%\newcommand{\bdm}{
- %   \begin{displaymath}}
-
-%\newcommand{\edm}{
-%    \end{displaymath}}
-
-%\newcommand{\be}{
-%    \begin{equation}}
-
-%\newcommand{\ee}{
-%    \end{equation}}
-
-%\newcommand{\bea}{
- %   \begin{eqnarray}}
-
-%\newcommand{\eea}{
-%    \end{eqnarray}}
-
-
-\providecommand{\tightlist}{%
-  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+%%%%%%%                     End of File Assignment
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % From {rticles}
 $if(csl-refs)$
@@ -169,21 +80,21 @@ $if(csl-refs)$
 \setlength{\cslhangindent}{1.5em}
 % for Pandoc 2.8 to 2.10.1
 \newenvironment{cslreferences}%
-  {$if(csl-hanging-indent)$\setlength{\parindent}{0pt}%
-  \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces$endif$}%
-  {\par}
+{$if(csl-hanging-indent)$\setlength{\parindent}{0pt}%
+	\everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces$endif$}%
+{\par}
 % For Pandoc 2.11+
 \newenvironment{CSLReferences}[3] % #1 hanging-ident, #2 entry spacing
- {% don't indent paragraphs
-  \setlength{\parindent}{0pt}
-  % turn on hanging indent if param 1 is 1
-  \ifodd #1 \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces\fi
-  % set entry spacing
-  \ifnum #2 > 0
-  \setlength{\parskip}{#2\baselineskip}
-  \fi
- }%
- {}
+{% don't indent paragraphs
+	\setlength{\parindent}{0pt}
+	% turn on hanging indent if param 1 is 1
+	\ifodd #1 \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces\fi
+	% set entry spacing
+	\ifnum #2 > 0
+	\setlength{\parskip}{#2\baselineskip}
+	\fi
+}%
+{}
 \usepackage{calc} % for calculating minipage widths
 \newcommand{\CSLBlock}[1]{#1\hfill\break}
 \newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
@@ -191,51 +102,34 @@ $if(csl-refs)$
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 $endif$
 
-
 \begin{document}
+%%%% Here you just need to include/input your actual work.
+%       The above files (dedication, acknowledgement, titlepage, etc etc) will all be added for you
+%       using the files you assigned above.
+%       If you want to input the above files manually you can comment out the \setFILE command above
+%       and use \input or \include here. Generally you want to use \include to get your pagebreak.
+%       NOTE: If you input manually you will have to do some/all the formatting manually.
 
-\maketitle
-\makecopyright
 
-\dedication{$dedication$}
-\acknowledge{$acknowledgements$}
 
-$if(toc)$
-% This creates your table of contents
-% the pdfbookmark line adds the word to the bookmarks of the pdf without adding it to the TOC itself
-\pdfbookmark[0]{TABLE OF CONTENTS}{tableofcontents}
-\tableofcontents %
-% Produced list of abbreviations or symbols %
-%\printindex[keylist]{KEY TO ABBREVIATIONS}{KEY TO ABBREVIATIONS}{}
-%\printindex[mathlist]{KEY TO SYMBOLS}{KEY TO SYMBOLS}{%
-%The list shown below gives a brief description of the major mathematical symbols defined in this work. For each
-%symbol, the page number corresponds to the place where the symbol is first used.} %
-$endif$
+\include{chapter1}% Modified from old template.
 
-% This creates your list of figures
-$if(lot)$
-\listoftables %
-$endif$
+%\begin{algorithm}% Example showing the weird "algorithm" environment works...
+%    \captionof{algorithm}{Test Caption}
+%\end{algorithm}
+%\addObject{TestStuff!}%     This is probably the command that a normal author will use to add objects.
 
-% This creates your list of tables
-$if(lof)$
-%\setcounter{lofdepth}{2}
-\listoffigures %
-$endif$
+\include{chapter2}% Modified from old template.
+\include{chapter3}% Modified from old template.
 
-\abstract{$abstract$}
-\addtocontents{toc}{\protect\addvspace{10pt}\noindent{CHAPTER}\protect\hfill\par}{}
-\phantomsection
+\chapter{EXAMPLES OF EDITOR/Author TOOLS, TABLES, AND IMAGES}% Notice that we can use chapter/section etc breaks in the master file if we want, and then use \input instead of \include to avoid unneccessary page breaks.
+\input{editorAndAuthorRemarks}%     Stuff about using editorRemark and authorRemark commands
+\input{includingTablesExamples}%    Stuff about using Tables.
+\input{includingImagesExamples}%    Stuff about using Images.
 
+\include{chapter5}% Modified from old template.
 
 $body$
 
-
-
-\bibliography {bib/sample,bib/example}
-
-\include{bio}
-
 \end{document}
 
-%------------------------------------------------------------------------------%
