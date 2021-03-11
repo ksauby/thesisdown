@@ -1,0 +1,9 @@
+\section{Example of using the authorRemark and editorRemark}
+If you don't see any blue or red type under this line, then you almost certainly need to include the optional ``editMode" to the document class. Thus your document class (first line) should read \verb|\documentclass[editMode]{ufdissertation}|.
+
+\authorRemark{Test! This is a remark written by the author, to themselves, for review purposes. It will be suppressed unless editMode is used in the class options.}
+
+\editorRemark{This is an editor's remark, written by an editor in-line so that they can write into the content itself with something easy to see. But the remark will be suppressed unless editMode is used in the class options.
+
+To get this remark to go away, simply remove ``editMode" from the documentclass options at the top of the user's tex-file. This also removes the blue Author Remarks.
+}
