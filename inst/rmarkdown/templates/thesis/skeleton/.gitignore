@@ -11,4 +11,7 @@
 *.lot
 *.lof
 *.aux
+*.synctex
+*.gz
+*.pdf
 ufdissertation.tex
