@@ -7,6 +7,7 @@
 %%% We need to redefine the \@chapter to kill off the weird injected gaps between
 %   and tables in their respective Lists. It's easier to do it this way than to
 %   try and retroactively fix it later.
+% Stolen from book.cls:
 
 \def\@chapter[#1]#2{\ifnum \c@secnumdepth >\m@ne
                        \if@mainmatter
@@ -70,6 +71,23 @@
 \RequirePackage{titletoc}%          Use this to manipulate Table of Contents styling
 \RequirePackage{float}
 \RequirePackage[numbers]{natbib}
+
+% taken from ismayc/thesisdown template, adds additional compatibility with different compilers
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+    \usepackage{xltxtra,xunicode}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+  \newcommand{\euro}{€}
+\fi
 
 \providecommand{\ifExists}[3]{%     Check to see if a macro is defined, for the use of detecting
 %                                   which files have been supplied by the user.
@@ -333,7 +351,7 @@
 \renewcommand*{\thefigure}{\thechapter-\arabic{figure}}%            Change the dot to a hyphen for list of figures.
 \renewcommand*{\theequation}{\thechapter-\arabic{equation}}%        Change the equation to chapter - equation#
 \renewcommand*{\thetable}{\thechapter-\arabic{table}}%              Change the dot to a hyphen for list of tables.
-%\renewcommand*{\thealgorithm}{\thechapter-\arabic{algorithm}}%      Change objects to be chapter - object #.
+\renewcommand*{\thealgorithm}{\thechapter-\arabic{algorithm}}%      Change objects to be chapter - object #.
 
 
 
@@ -416,62 +434,62 @@
 
 
 
-%%%%%%% Next is the creation of the List of Objects code.
-%%   Note: By default LaTeX only supports table of contents, List of tables and List of figures. The primary package to use to create a custom list is the tocloft package; but that has been depreciated and thus creates all kinds of cascading formatting problems with the other packages we use here.
-%%   However, we can hijack another well maintained package that generates (among other things) a custom "List of ...". Specifically, we hijack the "algorithms" package, which gives a "list of algorithms" and an "algorithm" environment that takes captions and, in general, does everything we want. We will hijack this, then retool it to format it how we want, and finally reskin the words a little bit to make it say "object" instead of "algorithm" where needed, in the output. Since this could be a bit confusing for the author (using an 'algorithm' environment to insert an object') we conclude by defining an "addObject" command that will allow the author to add an object via the sensible "addObject" command, and that command will do all the weird formating and call all the weird environments/factors/etc to make it work, all behind the scenes.
-%%   Currently I don't have a good enough idea of what the formating or nature of "Objects" are, in order to actually write the "addObjects" command fully, but I have the shell defined and correct until I get additional parameters.
-%
-%
-%%%% Hijack "list of algorithms" from the already-in-use caption package, but reskin it to be a "list of objects" instead.
-%
-%%%% Now setup everything to be formatted correctly as 'algorithms'.
-%\contentsuse{algorithm}{loa}%   Switches the definitions of things like \contentslabel to algorithms for the
-%%                                   titlecontents command that comes next.
-%\titlecontents{algorithm}[2em]% Copied from the \titlecontents for table/figure, but pointed to 'algorithms' for now.
-%    {}
-%    {\hspace*{-2em}\hyper@linkstart{link}{\Hy@tocdestname}\hspace*{2em}{\contentslabel{2em}}\hyper@linkend}
-%    {}
-%    {\hyper@linkstart{link}{\Hy@tocdestname}{\titlerule*[5pt]{.}\thecontentspage}\hyper@linkend \\*\addvspace{8pt}}
-%
-%% Now we copy the existing "list of tables" command and patch it to work as a "list of Objects" command.
-%\let\listofObjects\listoftables%                                        Copy command
-%\patchcmd{\listofObjects}{\listtablename}{\listalgorithmname}{}{}%      Patch the three instances of \listtablename
-%\patchcmd{\listofObjects}{\listtablename}{\listalgorithmname}{}{}%          to all be converted to the
-%\patchcmd{\listofObjects}{\listtablename}{\listalgorithmname}{}{}%          \listalgorithmname.
-%\patchcmd{\listofObjects}{lot}{loa}{}{}%                                Get the list of objects from the .loa file.
-%
-%
-%%%% Now we do the reskin process; converting the default "algorithm" content to be "object" content.
-%
-%% Rename the "algorithms" name in the \listofObjects to be "Objects". Also include the other typesetting stuff
-%%   like the "Object" and "page" above the list of actual objects.
-%\renewcommand{\listalgorithmname}{LIST OF OBJECTS
-%
-%    \underline{\smash{Objects}} \hfill \underline{\smash{page}}
-%
-%    \vspace*{-0.7\baselineskip}
-%    }%
-%
-%\floatname{algorithm}{Object}% Change the word "Algorithm" in the in-line text to be "Object".
-%
-%%% NOTE ABOUT THE FOLLOWING \addObject COMMAND::
-%%   I am still unclear about what exactly objects are, or how they are to be treated in the text.
-%%       This command is a temporary formating command, which can be adjusted to format the "object" input by an author,
-%%       without the author actually needing to do much of anything, or knowing much of anything in the background.
-%%       At a minimum, I suspect there will need to be another required argument, where the author will supply a hyperlink.
-%%       As I understand it, the in-text object will be the caption, but clicking the caption/text should launch a url?
-%
-%\newcommand{\addObject}[2][H]{%    This command is for the user to add an 'object' to their dissertation,
-%%                                   this command is intended to do all the formating for them, hiding the fact that we
-%%                                   hijacked the 'algorithms' list and environments to do so.
-%%                                   SYNTAX:: \addObject[#1]{#2}
-%%                                       #1 Is an optional parameter that handles placement. We use `H` by default to force
-%%                                           LaTeX to place it inline where the command is used, as best it can.
-%%                                       #2 Is the required argument, which is the caption (ie text) of the object.
-%    \begin{algorithm}[#1]
-%        \captionof{algorithm}{#2}
-%    \end{algorithm}
-%    }%
+%%%%%% Next is the creation of the List of Objects code.
+%   Note: By default LaTeX only supports table of contents, List of tables and List of figures. The primary package to use to create a custom list is the tocloft package; but that has been depreciated and thus creates all kinds of cascading formatting problems with the other packages we use here.
+%   However, we can hijack another well maintained package that generates (among other things) a custom "List of ...". Specifically, we hijack the "algorithms" package, which gives a "list of algorithms" and an "algorithm" environment that takes captions and, in general, does everything we want. We will hijack this, then retool it to format it how we want, and finally reskin the words a little bit to make it say "object" instead of "algorithm" where needed, in the output. Since this could be a bit confusing for the author (using an 'algorithm' environment to insert an object') we conclude by defining an "addObject" command that will allow the author to add an object via the sensible "addObject" command, and that command will do all the weird formating and call all the weird environments/factors/etc to make it work, all behind the scenes.
+%   Currently I don't have a good enough idea of what the formating or nature of "Objects" are, in order to actually write the "addObjects" command fully, but I have the shell defined and correct until I get additional parameters.
+
+
+%%% Hijack "list of algorithms" from the already-in-use caption package, but reskin it to be a "list of objects" instead.
+
+%%% Now setup everything to be formatted correctly as 'algorithms'.
+\contentsuse{algorithm}{loa}%   Switches the definitions of things like \contentslabel to algorithms for the
+%                                   titlecontents command that comes next.
+\titlecontents{algorithm}[2em]% Copied from the \titlecontents for table/figure, but pointed to 'algorithms' for now.
+   {}
+   {\hspace*{-2em}\hyper@linkstart{link}{\Hy@tocdestname}\hspace*{2em}{\contentslabel{2em}}\hyper@linkend}
+   {}
+   {\hyper@linkstart{link}{\Hy@tocdestname}{\titlerule*[5pt]{.}\thecontentspage}\hyper@linkend \\*\addvspace{8pt}}
+
+% Now we copy the existing "list of tables" command and patch it to work as a "list of Objects" command.
+\let\listofObjects\listoftables%                                        Copy command
+\patchcmd{\listofObjects}{\listtablename}{\listalgorithmname}{}{}%      Patch the three instances of \listtablename
+\patchcmd{\listofObjects}{\listtablename}{\listalgorithmname}{}{}%          to all be converted to the
+\patchcmd{\listofObjects}{\listtablename}{\listalgorithmname}{}{}%          \listalgorithmname.
+\patchcmd{\listofObjects}{lot}{loa}{}{}%                                Get the list of objects from the .loa file.
+
+
+%%% Now we do the reskin process; converting the default "algorithm" content to be "object" content.
+
+% Rename the "algorithms" name in the \listofObjects to be "Objects". Also include the other typesetting stuff
+%   like the "Object" and "page" above the list of actual objects.
+\renewcommand{\listalgorithmname}{LIST OF OBJECTS
+
+   \underline{\smash{Objects}} \hfill \underline{\smash{page}}
+
+   \vspace*{-0.7\baselineskip}
+   }%
+
+\floatname{algorithm}{Object}% Change the word "Algorithm" in the in-line text to be "Object".
+
+%% NOTE ABOUT THE FOLLOWING \addObject COMMAND::
+%   I am still unclear about what exactly objects are, or how they are to be treated in the text.
+%       This command is a temporary formating command, which can be adjusted to format the "object" input by an author,
+%       without the author actually needing to do much of anything, or knowing much of anything in the background.
+%       At a minimum, I suspect there will need to be another required argument, where the author will supply a hyperlink.
+%       As I understand it, the in-text object will be the caption, but clicking the caption/text should launch a url?
+
+\newcommand{\addObject}[2][H]{%    This command is for the user to add an 'object' to their dissertation,
+%                                   this command is intended to do all the formating for them, hiding the fact that we
+%                                   hijacked the 'algorithms' list and environments to do so.
+%                                   SYNTAX:: \addObject[#1]{#2}
+%                                       #1 Is an optional parameter that handles placement. We use `H` by default to force
+%                                           LaTeX to place it inline where the command is used, as best it can.
+%                                       #2 Is the required argument, which is the caption (ie text) of the object.
+   \begin{algorithm}[#1]
+       \captionof{algorithm}{#2}
+   \end{algorithm}
+   }%
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -631,10 +649,10 @@
         \addcontentsline{toc}{chapter}{LIST OF FIGURES}
     \fi
 
-%    \ifhaveObjects
-%        {\realSingleSpace \listofObjects}%{List of Objects}}% List of Objects is last, if you have one.
-%        \addcontentsline{toc}{chapter}{LIST OF OBJECTS}
-%    \fi
+   \ifhaveObjects
+       {\realSingleSpace \listofObjects}%{List of Objects}}% List of Objects is last, if you have one.
+       \addcontentsline{toc}{chapter}{LIST OF OBJECTS}
+   \fi
 
     \ifExists{abbreviationsFile}
         {%                              If we have defined a abbreviations file, import it.
