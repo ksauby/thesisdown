@@ -1,6 +1,6 @@
 ---
 title: 'YOUR TITLE GOES HERE: UNIVERSITY OF FLORIDA TEMPLATE FOR PREPARING THESES AND DISSERTATIONS'
-author: 'YOUR NAME GOES HERE IN ALL CAPITAL LETTERS'
+author: 'YOUR NAME GOES HERE'
 date: 'YYYY'
 institution: 'The University of Florida'
 division: 'College of Agriculture and Life Sciences'
