@@ -1,12 +1,12 @@
 ---
-title: 'YOUR TITLE GOES HERE: UNIVERSITY OF FLORIDA TEMPLATE FOR PREPARING THESES AND DISSERTATIONS'
-author: 'YOUR NAME GOES HERE'
+title: 'Your Title Goes Here: University of Florida Unofficial Rmarkdown Template for Preparing Theses and Dissertations'
+author: 'Your Name Goes Here'
 date: 'YYYY'
 institution: 'The University of Florida'
 division: 'College of Agriculture and Life Sciences'
 advisor: 'Name (Do not put Dr. before the name, and do not put degrees after it)'
 # If you have more two advisors, un-silence line 9:
-altadvisor: 'Name (if any, otherwise delete this line)'
+altadvisor: 'Name (if any, otherwise silence this line)'
 department: 'See your Editorial Document Management record for your exact major'
 degree: 'Doctor of Philosophy'
 knit: bookdown::render_book
@@ -41,7 +41,8 @@ acknowledgements: |
   Acknowledgments must be written in complete sentences. Do not use direct address. For example, instead of Thanks, Mom and Dad!, you should say I thank my parents.
 dedication: |
   Your dedication is typed here. It should begin with the word “To.” (To my Mom is a typical dedication) If your dedication is longer than a single line it should be single-spaced, and centered vertically and horizontally
- 
+
+#Use this section for your biography
 preface: |
   This is an example of a thesis setup to use the reed thesis document class 
   (for LaTeX) and the R bookdown package, in general.
