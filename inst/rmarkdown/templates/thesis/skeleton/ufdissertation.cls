@@ -6,9 +6,8 @@
 
 %%% We need to redefine the \@chapter to kill off the weird injected gaps between
 %   and tables in their respective Lists. It's easier to do it this way than to
-%   try and retroactively fix it later.
-% Stolen from book.cls:
-
+%   try and retroactively fix it later. 
+ 
 \def\@chapter[#1]#2{\ifnum \c@secnumdepth >\m@ne
                        \if@mainmatter
                          \refstepcounter{chapter}%
@@ -31,15 +30,15 @@
                       \@afterheading
                     \fi}
 
-\def\tightlist{}
 
+                    
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%    Support Packages and Commands    %%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%% Generic useful configuration packages, used to configure most of the stuff below.
 \RequirePackage[linktoc=all]{hyperref}% Use this to provide intra-pdf hyperlinking and better toc
-\hypersetup{%               %           Setup the coloring of the links.
+\hypersetup{%               %           Setup the coloring of the links. 
 %                           %           Currently the only necessary one is "colorlinks=true" and "linkcolor=blue".
     colorlinks   = true,    %           Colours links instead of ugly boxes
     urlcolor     = blue,    %           Colour for external hyperlinks
@@ -63,8 +62,7 @@
 
 \RequirePackage[plain]{algorithm}%      Load the algorithm environment, which we hijack into the "Objects" environment.
 %                                               The "plain" option is to remove the special algorithm formating in the text.
-\usepackage{algorithmic}
-
+   
 \RequirePackage[largestsep]{titlesec}%  Use this for the actual header styling
 %                                           The "largestsep" option forces the gap between chapter and text to be the same as
 %                                               the gap between the chapter and section when they occur consecutively.
@@ -72,34 +70,17 @@
 \RequirePackage{float}
 \RequirePackage[numbers]{natbib}
 
-% taken from ismayc/thesisdown template, adds additional compatibility with different compilers
-\usepackage{ifxetex,ifluatex}
-\usepackage{fixltx2e} % provides \textsubscript
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
-  \usepackage[T1]{fontenc}
-  \usepackage[utf8]{inputenc}
-\else % if luatex or xelatex
-  \ifxetex
-    \usepackage{mathspec}
-    \usepackage{xltxtra,xunicode}
-  \else
-    \usepackage{fontspec}
-  \fi
-  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
-  \newcommand{\euro}{€}
-\fi
-
-\providecommand{\ifExists}[3]{%     Check to see if a macro is defined, for the use of detecting
+\providecommand{\ifExists}[3]{%     Check to see if a macro is defined, for the use of detecting 
 %                                   which files have been supplied by the user.
      \ifcsname#1\endcsname%
          #2%                        If it is defined, do this.
      \else
          #3%                        Otherwise, do this.
      \fi
-
+     
     }
 
-\providecommand{\realSingleSpace}{\setstretch{1}}%  They claim they want single-space, but what they actually want is
+\providecommand{\realSingleSpace}{\setstretch{1}}%  They claim they want single-space, but what they actually want is 
 %                                               "as little white space between letters as is visually acceptable".
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
@@ -109,11 +90,11 @@
 \newif\ifdocBody%       This is to decide if we want to display the "chapter #" in the text or not.
     \docBodyfalse%      Initially we don't want "chapter #" displayed until user-content.
 
-\newif\iftitleCapOff%   An option to override the auto-capitalization of title, for the rare time
+\newif\iftitleCapOff%   An option to override the auto-capitalization of title, for the rare time 
 %                           when you need to have non-capital letters in the title.
     \titleCapOfffalse%  By default titles are capitalized.
 
-\newif\ifchapterCapOff% An option to override the auto-capitalization of chapters, for the rare time
+\newif\ifchapterCapOff% An option to override the auto-capitalization of chapters, for the rare time 
 %                           when you need to have non-capital letters in your chapters.
     \chapterCapOfffalse% By default chapters are capitalized.
 
@@ -158,7 +139,7 @@
 %%%%%%%%%%%%%%%%%%%%%
 %%% Font Options: %%%
 %%%%%%%%%%%%%%%%%%%%%
-%%%                         They want Times New Roman, or Arial.
+%%%                         They want Times New Roman, or Arial. 
 %%%                         Times New Roman is loaded by default, uncomment the \renewcommand below to switch it to Arial.
 
 \RequirePackage{mathptmx}%  This is required to load and convert to times new roman
@@ -178,8 +159,8 @@
 \renewcommand\headrulewidth{0pt}
 \lhead{}\chead{}\rhead{}
 \cfoot{\thepage}
-\setlength{\footskip}{0.5in}%   They want the page number to be half an inch from the bottom.
-%                               This measurement is actually the distance to the text block;
+\setlength{\footskip}{0.5in}%   They want the page number to be half an inch from the bottom. 
+%                               This measurement is actually the distance to the text block; 
 %                               So 1in margin - 0.5inch from botton = 0.5in footskip value.
 %% End page numbering settings
 
@@ -188,12 +169,12 @@
 %%%%%%%%%%%%%%%%%%%%
 
 \RequirePackage[nodisplayskipstretch]{setspace}%    This will allow us to set spacing in general.
-%                                                   The optional argument "nodisplayskipstretch" turns off doublespacing
+%                                                   The optional argument "nodisplayskipstretch" turns off doublespacing 
 %                                                       for math display mode environments.
 \doublespacing%                                     Make everything double spaced by default.
 %
 \AtBeginEnvironment{longtable}{\realSingleSpace}{}%             Pre-append using longtables to make sure that tables are single spaced.
-\preto\itemize{\par\realSingleSpace}%               Pre-append singlespace to itemize to account for
+\preto\itemize{\par\realSingleSpace}%               Pre-append singlespace to itemize to account for 
 %                                                       single space bullet point lists.
 \RequirePackage{indentfirst}%                       This will make sure the first paragraph of every chapter is indented.
 
@@ -240,13 +221,13 @@
 %%%%%%%%%%%%%%%%%%%%%%%%
 %%% They want tables configured a certain way that makes the package "longtables" a more desirable option.
 %   More specifically, from their website on text-flow:
-%        Text must be continuous throughout the chapter.
-%        It is best to place all tables and figures at the end of the appropriate chapter.
-%        Avoid inserting them into the text of the chapter, unless you are able to do so
+%        Text must be continuous throughout the chapter. 
+%        It is best to place all tables and figures at the end of the appropriate chapter. 
+%        Avoid inserting them into the text of the chapter, unless you are able to do so 
 %        without leaving blank gaps at the bottom of text pages.
 %%%%%%%
 \RequirePackage{longtable}
-\RequirePackage{flafter}%   This package stops tables from floating backward up the text.
+\RequirePackage{flafter}%   This package stops tables from floating backward up the text. 
 %                               This stops weirdness like tables appearing before the section they are in within the source.
 
 %%% Tables need to have their captions "sit" on the table, but figures shouldn't.
@@ -259,10 +240,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Title Page Formating %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Maketitle needs to be redefined to make the titlepage look how they want.
+%%% Maketitle needs to be redefined to make the titlepage look how they want. 
 %       Actual parameters for the title page would be nice.
 %%%%%%%
-\providecommand{\@docTitle}{\MakeUppercase{\@title}}%   Use this command to force uppercase titles,
+\providecommand{\@docTitle}{\MakeUppercase{\@title}}%   Use this command to force uppercase titles, 
 %                                                           but provide an option to over ride this; using overrideTitles.
 \renewcommand{\maketitle}{%
     \begin{center}
@@ -285,8 +266,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%
 %%% Header Formatting %%%
 %%%%%%%%%%%%%%%%%%%%%%%%
-%%  Some headers by default have a huge margin between the top of the chapter text and the top margin,
-%       which the grad school doesn't like. So we use the titlesec package and the \titleformat command to
+%%  Some headers by default have a huge margin between the top of the chapter text and the top margin, 
+%       which the grad school doesn't like. So we use the titlesec package and the \titleformat command to 
 %       directly access all aspects of chapters and parts to fix spacing, formating, and style.
 \titlelabel{\thetitle . \quad}
 
@@ -316,7 +297,7 @@
 \setcounter{secnumdepth}{5}
 \titleformat{\section}%
     {%
-        \bfseries\center\realSingleSpace%       We want \section to be bold (\bfseries), centered (\center),
+        \bfseries\center\realSingleSpace%       We want \section to be bold (\bfseries), centered (\center), 
     }%                                              and single spaced (\realSingleSpace)
     {%
         \thesection%                            The section number is held in \thesection
@@ -329,7 +310,7 @@
     {\thesubsection}%
     {1em}{}%
 \titleformat{\subsubsection}
-    {\bfseries\filright\realSingleSpace%     We want \subsubsection to be bold (\bfseries), left-justified (\filright),
+    {\bfseries\filright\realSingleSpace%     We want \subsubsection to be bold (\bfseries), left-justified (\filright), 
     }%                                              and single spaced (\realSingleSpace)
     {\thesubsubsection%                      The section number is held in \thesubsubsection
     }%
@@ -357,26 +338,26 @@
 
 %%% Fix the titles of the "List Of ...", complete with adding the page/title at the top where applicable.
 \renewcommand*\listfigurename{LIST OF FIGURES
-
+    
     \underline{\smash{Figures}} \hfill \underline{\smash{page}}
-
+    
     \vspace*{-0.7\baselineskip}
     }%
 
 \renewcommand*\listtablename{LIST OF TABLES
-
+    
     \underline{\smash{Tables}} \hfill \underline{\smash{page}}
-
+    
     \vspace*{-0.7\baselineskip}
     }%
 
 \renewcommand{\contentsname}{TABLE OF CONTENTS
-
+    
     \hspace*{0pt}\hfill \underline{\smash{page}}
-
+    
     \vspace*{-0.7\baselineskip}
     }%
-
+    
 
 \titlecontents{figure}[2em]
     {}
@@ -389,7 +370,7 @@
     {\hspace*{-2em}\hyper@linkstart{link}{\Hy@tocdestname}\hspace*{2em}{\contentslabel{2em}}\hyper@linkend}
     {}
     {\hyper@linkstart{link}{\Hy@tocdestname}{\titlerule*[5pt]{.}\thecontentspage}\hyper@linkend \\*\addvspace{8pt}}
-
+    
 %%%% An attempt to do everything with titlesec and titletoc packages instead of using toclof package, to avoid package clashes.
 
 \contentsmargin[20pt]{0pt}% This is the right-margin for the table of contents, list of figures, list of tables, and list of objects.
@@ -435,7 +416,7 @@
 
 
 %%%%%% Next is the creation of the List of Objects code.
-%   Note: By default LaTeX only supports table of contents, List of tables and List of figures. The primary package to use to create a custom list is the tocloft package; but that has been depreciated and thus creates all kinds of cascading formatting problems with the other packages we use here.
+%   Note: By default LaTeX only supports table of contents, List of tables and List of figures. The primary package to use to create a custom list is the tocloft package; but that has been depreciated and thus creates all kinds of cascading formatting problems with the other packages we use here. 
 %   However, we can hijack another well maintained package that generates (among other things) a custom "List of ...". Specifically, we hijack the "algorithms" package, which gives a "list of algorithms" and an "algorithm" environment that takes captions and, in general, does everything we want. We will hijack this, then retool it to format it how we want, and finally reskin the words a little bit to make it say "object" instead of "algorithm" where needed, in the output. Since this could be a bit confusing for the author (using an 'algorithm' environment to insert an object') we conclude by defining an "addObject" command that will allow the author to add an object via the sensible "addObject" command, and that command will do all the weird formating and call all the weird environments/factors/etc to make it work, all behind the scenes.
 %   Currently I don't have a good enough idea of what the formating or nature of "Objects" are, in order to actually write the "addObjects" command fully, but I have the shell defined and correct until I get additional parameters.
 
@@ -446,11 +427,11 @@
 \contentsuse{algorithm}{loa}%   Switches the definitions of things like \contentslabel to algorithms for the
 %                                   titlecontents command that comes next.
 \titlecontents{algorithm}[2em]% Copied from the \titlecontents for table/figure, but pointed to 'algorithms' for now.
-   {}
-   {\hspace*{-2em}\hyper@linkstart{link}{\Hy@tocdestname}\hspace*{2em}{\contentslabel{2em}}\hyper@linkend}
-   {}
-   {\hyper@linkstart{link}{\Hy@tocdestname}{\titlerule*[5pt]{.}\thecontentspage}\hyper@linkend \\*\addvspace{8pt}}
-
+    {}
+    {\hspace*{-2em}\hyper@linkstart{link}{\Hy@tocdestname}\hspace*{2em}{\contentslabel{2em}}\hyper@linkend}
+    {}
+    {\hyper@linkstart{link}{\Hy@tocdestname}{\titlerule*[5pt]{.}\thecontentspage}\hyper@linkend \\*\addvspace{8pt}}
+    
 % Now we copy the existing "list of tables" command and patch it to work as a "list of Objects" command.
 \let\listofObjects\listoftables%                                        Copy command
 \patchcmd{\listofObjects}{\listtablename}{\listalgorithmname}{}{}%      Patch the three instances of \listtablename
@@ -464,16 +445,16 @@
 % Rename the "algorithms" name in the \listofObjects to be "Objects". Also include the other typesetting stuff
 %   like the "Object" and "page" above the list of actual objects.
 \renewcommand{\listalgorithmname}{LIST OF OBJECTS
-
-   \underline{\smash{Objects}} \hfill \underline{\smash{page}}
-
-   \vspace*{-0.7\baselineskip}
-   }%
-
+    
+    \underline{\smash{Objects}} \hfill \underline{\smash{page}}
+    
+    \vspace*{-0.7\baselineskip}
+    }%
+        
 \floatname{algorithm}{Object}% Change the word "Algorithm" in the in-line text to be "Object".
 
 %% NOTE ABOUT THE FOLLOWING \addObject COMMAND::
-%   I am still unclear about what exactly objects are, or how they are to be treated in the text.
+%   I am still unclear about what exactly objects are, or how they are to be treated in the text. 
 %       This command is a temporary formating command, which can be adjusted to format the "object" input by an author,
 %       without the author actually needing to do much of anything, or knowing much of anything in the background.
 %       At a minimum, I suspect there will need to be another required argument, where the author will supply a hyperlink.
@@ -486,55 +467,55 @@
 %                                       #1 Is an optional parameter that handles placement. We use `H` by default to force
 %                                           LaTeX to place it inline where the command is used, as best it can.
 %                                       #2 Is the required argument, which is the caption (ie text) of the object.
-   \begin{algorithm}[#1]
-       \captionof{algorithm}{#2}
-   \end{algorithm}
-   }%
+    \begin{algorithm}[#1]
+        \captionof{algorithm}{#2}
+    \end{algorithm}
+    }%
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%   User Configuration Commands    %%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\providecommand{\setCopyrightFile}[2][tex]{%        Sets the file name for the copyright file and saves it in the macro
+\providecommand{\setCopyrightFile}[2][tex]{%        Sets the file name for the copyright file and saves it in the macro 
 %                                                       \copyrightFile
     \edef\copyrightFile{#2.#1}
     }
 
-\providecommand{\setDedicationFile}[2][tex]{%       Sets the file name for the dedication file and saves it in the macro
+\providecommand{\setDedicationFile}[2][tex]{%       Sets the file name for the dedication file and saves it in the macro 
 %                                                       \dedicationFile
     \edef\dedicationFile{#2.#1}
     }
 
-\providecommand{\setAcknowledgementsFile}[2][tex]{% Sets the file name for the acknowledgements file and
+\providecommand{\setAcknowledgementsFile}[2][tex]{% Sets the file name for the acknowledgements file and 
 %                                                       saves it in the macro \acknowledgementsFile
     \edef\acknowledgementsFile{#2.#1}
     }
 
-\providecommand{\setAbbreviationsFile}[2][tex]{%    Sets the file name for the abbreviations file and
+\providecommand{\setAbbreviationsFile}[2][tex]{%    Sets the file name for the abbreviations file and 
 %                                                       saves it in the macro \abbreviationsFile
     \edef\abbreviationsFile{#2.#1}
     }
-
-\providecommand{\setAbstractFile}[2][tex]{%         Sets the file name for the abstract file and
+    
+\providecommand{\setAbstractFile}[2][tex]{%         Sets the file name for the abstract file and 
 %                                                       saves it in the macro \abstractFile
     \edef\abstractFile{#2.#1}
     }
 
-\providecommand{\setAppendixFile}[2][tex]{%         Sets the file name for the appendix file and
+\providecommand{\setAppendixFile}[2][tex]{%         Sets the file name for the appendix file and 
 %                                                       saves it in the macro \appendixFile
     \edef\appendixFile{#2.#1}
     }
 
-\providecommand{\setReferenceFile}[2]{%             Sets the file name for the reference file and
-%                                                       saves it in the macro \referenceFile.
-%                                           We assume anyone using LaTeX will use BibTeX unless they specify otherwise.
+\providecommand{\setReferenceFile}[2]{%             Sets the file name for the reference file and 
+%                                                       saves it in the macro \referenceFile. 
+%                                           We assume anyone using LaTeX will use BibTeX unless they specify otherwise. 
 %                                           The second argument sets the .bst file that should hold the bibtex style file.
     \edef\referenceFile{#1}
     \edef\referenceStyle{#2}
     }
 
-\providecommand{\setBiographicalFile}[2][tex]{%     Sets the file name for the biographical file and
+\providecommand{\setBiographicalFile}[2][tex]{%     Sets the file name for the biographical file and 
 %                                                       saves it in the macro \biographicalFile
     \edef\biographicalFile{#2.#1}
     }
@@ -557,13 +538,13 @@
 \providecommand{\chair}[2][]{%          This is the chair and takes an optional argument (default blank) for the cochair.
     \providecommand{\@Chair}{#2}
     \if\relax\detokenize{#1}\relax%     Test if the optional argument is given.
-    \else%                              If it wasn't given we do nothing.
+    \else%                              If it wasn't given we do nothing. 
     %                                   If it is given, then we will define a "cochair" command to hold the cochair name.
         \providecommand{\@CoChair}{#1}%
     \fi
     }
 
-\providecommand{\degreeMonth}[1]{%      Record and store the intended month of graduation.
+\providecommand{\degreeMonth}[1]{%      Record and store the intended month of graduation. 
 %                                       Do it this way so we can test it later and warn if no month was given.
     \providecommand{\@DegreeMonth}{#1}
     }%
@@ -580,18 +561,18 @@
 
 %%%%%%%
 %%% Desired Input Page Order:
-% Title page,
-% copyright page,
-% dedication (if any),
-% acknowledgments,
-% table of contents,
-% list of tables (if any),
-% list of figures (if any),
-% list of abbreviations (if any),
-% academic abstract,
-% chapters,
-% appendices (if any),
-% list of references,
+% Title page, 
+% copyright page, 
+% dedication (if any), 
+% acknowledgments, 
+% table of contents, 
+% list of tables (if any), 
+% list of figures (if any), 
+% list of abbreviations (if any), 
+% academic abstract, 
+% chapters, 
+% appendices (if any), 
+% list of references, 
 % biographical sketch
 %%%%%%%
 
@@ -610,7 +591,7 @@
     \vspace*{\fill}
     \newpage
 
-    \setcounter{secnumdepth}{-1}% We don't want chapter numbers until later,
+    \setcounter{secnumdepth}{-1}% We don't want chapter numbers until later, 
                                 % So let's kill off the table of contents depth detector until we want to start counting.
 
     \ifExists{dedicationFile}%  Dedication comes second
@@ -624,13 +605,13 @@
         }
         {
             \@latex@warning{You haven't specified a dedication file using the command \setDedicationFile. Hopefully this is intentional!}
-        }
+        }    
 
 
     \ifExists{acknowledgementsFile}%    Acknowledgements come third.
         {% If we have defined a acknowledgements file, import it.
         \chapter{ACKNOWLEDGEMENTS}
-
+        
         \input{\acknowledgementsFile}
         }
         {
@@ -638,21 +619,21 @@
         }
 
     {\realSingleSpace\tableofcontents}%     Table of Contents comes fourth.
-
+    
     \ifhaveTables
         {\realSingleSpace\listoftables}%    List of tables comes next, if you have one.
         \addcontentsline{toc}{chapter}{LIST OF TABLES}
     \fi
-
+    
     \ifhaveFigures
         {\realSingleSpace\listoffigures}%   List of figures comes next, if you have one.
         \addcontentsline{toc}{chapter}{LIST OF FIGURES}
     \fi
-
-   \ifhaveObjects
-       {\realSingleSpace \listofObjects}%{List of Objects}}% List of Objects is last, if you have one.
-       \addcontentsline{toc}{chapter}{LIST OF OBJECTS}
-   \fi
+    
+    \ifhaveObjects
+        {\realSingleSpace \listofObjects}%{List of Objects}}% List of Objects is last, if you have one.
+        \addcontentsline{toc}{chapter}{LIST OF OBJECTS}
+    \fi
 
     \ifExists{abbreviationsFile}
         {%                              If we have defined a abbreviations file, import it.
@@ -663,7 +644,7 @@
         {
             \@latex@warning{You haven't specified a abbreviations file using the command \setAbbreviationsFile. Hopefully this is intentional!}
         }
-
+        
     \newpage%                           Since the abstract needs to be a phantom chapter, we need to force a newpage.
     \ifExists{abstractFile}%            Abstract page comes next.
         {%                              If we have defined a abstract file, import it.
@@ -674,13 +655,13 @@
                 Abstract of \@ThesisType{} Presented to the Graduate School \\
                 of the University of Florida in Partial Fulfillment of the \\
                 Requirements for the Degree of \@DegreeType\\[\baselineskip]
-
+            
                 \bgroup\@docTitle\egroup\\[\baselineskip]
 
                 By\\[\baselineskip]
-
+                
                 \@author \\[\baselineskip]
-
+                
                 \@DegreeMonth{} \@DegreeYear
             \end{center}
             \bgroup\realSingleSpace\vspace*{-\baselineskip}
@@ -696,7 +677,7 @@
                 }
             \noindent Major: \@Major \\
             \egroup
-
+            
             \input{\abstractFile}
         }
         {
@@ -705,7 +686,7 @@
         \addtocontents{toc}{\protect\contentsline{part}{CHAPTER}{}{}}%% Input a dummy "CHAPTER" heading to show user-content
         \setcounter{secnumdepth}{5}
         \docBodytrue
-
+        
         \titlecontents{chapter}[2em]
             {\addvspace{8pt}}
             {%
@@ -715,7 +696,7 @@
             }%
             {}
             {\hyper@linkstart{link}{\Hy@tocdestname}{\titlerule*[5pt]{.}\thecontentspage}\hyper@linkend \\*\addvspace{8pt}}
-
+        
     }%
 
 \AtEndDocument{%                                            Use this to display the end-content files.
@@ -734,11 +715,11 @@
     \ifExists{appendixFile}%                                Appendix file comes first after user content.
         {%                                                  If we have defined an appendix file, import it.
         %                                                   NOTE: If there is only one Appendix, it should be of the form: Appendix:  "Appendix title". Otherwise it should use Alpha headers A, B, C, etc. :: Done, see below.
-
-
-
+        
+        
+        
         \ifmultipleAppendix%                            If there are multiple appendicies, we should format it this way.
-
+            
             %% I am told that now the grad school wants "APPENDIX A" above the first appendix etc for multi appendicies. I have included this option into the multiAppendix conditional under the assumption this is true.
             \titleformat{\chapter}[hang]
                 {\uppercase}
@@ -746,25 +727,25 @@
                 {0pt}
                 {\centering\realSingleSpace Appendix \thechapter \\[-5pt]}
                 [\raggedright\doublespacing]
-
+        
             \setcounter{secnumdepth}{-1}%               We don't want the Appendix to have a number, but it should be linked.
-
-            \phantomsection%                            We use a phantom section under the assumption that the appendicies
+            
+            \phantomsection%                            We use a phantom section under the assumption that the appendicies 
             %                                               will each individually be named via a \chapter command in the file.
             \addcontentsline{toc}{chapter}{APPENDIX}
-
+            
             \setcounter{secnumdepth}{4}
             \newcounter{appendixVal}%                   Use an entirely different counter for Appendicies to avoid
             %                                               hyperref misdirections to other already existing chapters.
             \setcounter{appendixVal}{0}%                Start counter at 0,
             %                                               Since the counter is stepped before the label is made.
             \let\appendixChapter\chapter%                  Save the normal \chapter command so we can temporarily hijack it.
-            \renewcommand{\chapter}[1]{\stepcounter{appendixVal}\appendixChapter{#1}}% Append a stepcounter to the
+            \renewcommand{\chapter}[1]{\stepcounter{appendixVal}\appendixChapter{#1}}% Append a stepcounter to the 
             %                                               Appendix counter to the normal chapter command.
             \renewcommand{\thechapter}{\Alph{appendixVal}}% Force the ToC to display and link using the new counter.
             \input{\appendixFile}%                      Input the appendix file, since we already checked that it exists.
             \let\chapter\appendixChapter%               Reset the chapter command back to normal now that appendix is done.
-
+            
             \titleformat{\chapter}[hang]%               Reset chapter titling to normal now that Appendix are done.
                 {\uppercase}
                 {}
@@ -781,11 +762,11 @@
                 {}
                 {\hyper@linkstart{link}{\Hy@tocdestname}{\titlerule*[5pt]{.}\thecontentspage}\hyper@linkend \\*}
                 \renewcommand{\thechapter}{}% Remove the number in front of the appendix chapter name.
-
+                
             \input{\appendixFile}
-
+                            
         \fi
-
+        
         }
         {
             \@latex@warning{You haven't specified an appendix file using the command \setAppendixFile. Hopefully this is intentional!}
@@ -797,9 +778,9 @@
         {\hspace*{-2em}\hyper@linkstart{link}{\Hy@tocdestname}\hspace*{2em}{\contentslabel{2em}}\hyper@linkend}
         {}
         {\hyper@linkstart{link}{\Hy@tocdestname}{\titlerule*[5pt]{.}\thecontentspage}\hyper@linkend \\*}
-
+        
     \titlespacing{\chapter}{0pt}{-0.7in}{0.5\baselineskip}
-
+    
     \ifExists{referenceFile}%                               Reference file comes next.
         {%                                                  If we have defined a reference file, import it.
             \setcounter{secnumdepth}{-1}%                   And we don't want to number our chapters anymore.
@@ -814,7 +795,7 @@
         {
             \@latex@warning{You haven't specified a reference file using the command \setReferenceFile. Hopefully this is intentional!}
         }
-
+        
     \ifExists{biographicalFile}%                            Biographical Sketch comes next (and last).
         {%                                                  If we have defined a biography file, import it.
             \chapter{BIOGRAPHICAL SKETCH}
@@ -877,7 +858,7 @@
 
 \newcommand{\editorRemark}[1]{% This is a way to insert editor remarks for the author.
 %                               It will be suppressed unless "editMode" class option is enabled.
-%                               To distinguish it, the editor remark will be colored
+%                               To distinguish it, the editor remark will be colored 
 %                                   (different than author remarks) and bolded.
     \ifeditMode
         {\color{red}\bfseries #1}

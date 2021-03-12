@@ -1,78 +1,79 @@
-\documentclass{ufdissertation}\sloppy
+% This is an adaptation of the the Reed College LaTeX thesis template.
+% Most of the work for the document class was done by Sam Noble (SN),
+% as well as this  template. Later comments etc. by Ben Salzberg (BTS).
+% Additional restructuring and APA support by Jess Youngberg (JY).
+% Your comments and suggestions are more than welcome; please email
+% them to cus@reed.edu
+%
+% See https://www.reed.edu/cis/help/LaTeX/index.html for help. There are a
+% great bunch of help pages there, with notes on
+% getting started, bibtex, etc. Go there and read it if you're not
+% already familiar with LaTeX.
+%
+% Any line that starts with a percent symbol is a comment.
+% They won't show up in the document, and are useful for notes
+% to yourself and explaining commands.
+% Commenting also removes a line from the document;
+% very handy for troubleshooting problems. -BTS
+%
+%
+% This template was originally adapted by Kristen Sauby (KS) in 2017
+% to meet the requirements outlined in the University of Florida
+% Guide for Preparing Theses and Dissertations
+% http://graduateschool.ufl.edu/media/graduate-school/pdf-files/Guide-for-ETDs.pdf
+% http://graduateschool.ufl.edu/about-us/offices/editorial/thesis-and-dissertation/
+% https://helpdesk.ufl.edu/application-support-center/etd-technical-support/ms-word-and-latex-templates/
+%
+% Austin N Fife (AF) made some adaptations to the template and .cls files in 2021 to reduce
+% dependencies on external files, as well as integrating many of the edits from ismayc's depository
+%%
+%% Preamble and comments added by AF
+%%
+% \documentclass{<something>} must begin each LaTeX document
+\documentclass[12pt,final,CPage]{ufthesis}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%                 User Package and Style File loading.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%\usepackage{CustomMacros}%  This is a user macro/style file.
-
-\usepackage{tikz}%       tikz is used by almost everyone, but certainly by me for this.
-\usepackage{pgfplots}%   pgfplots is tikz but better.
-\pgfplotsset{compat=1.7}
+% moved packages from 'packages.tex' to the template file -AF
+% here you define all the packages you wish to use in your paper, the ones shown are not all necessary,
+% but all have purpose and can be very useful, so leave these as default and add packages as necassary
+\usepackage{graphicx}
+%\usepackage[dvipdfmx]{graphicx}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{algpseudocode}
+\usepackage{tabularx}
+\usepackage{url}
+\usepackage[letterpaper,hmargin=1in,vmargin=1in]{geometry}
+\usepackage{lscape}
+%\usepackage{hanging}
+\usepackage{longtable}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+%\usepackage[cmbright]{sfmath} % Comment this line to use Times New Roman Math Typeface
 \usepackage{booktabs}
-\usepackage{makecell}
-%\usepackage{amsrefs}%   amsrefs contains the .bibtex style content for mathematician papers.
+\usepackage{subfigure}
+\usepackage{rotating}
+\usepackage{calc}
+\usepackage{setspace}
+%\usepackage{ufenumerate}
+\usepackage{latexsym}
+\usepackage{epsf}
+\usepackage{epsfig}
+\usepackage{euscript}
+\usepackage[format=hang,justification=raggedright,singlelinecheck=0,labelsep=period]{caption}
+\usepackage[numbers,sort&compress]{natbib} %Use this set-up for numbered reference lists
+%\usepackage[authoryear]{natbib} %Use this set-up if you want an un-numbered reference list
+%\usepackage{hypernat}
+\RequirePackage[linktoc=all]{hyperref}% Use this to provide intra-pdf hyperlinking and better toc
+\hypersetup{%               %           Setup the coloring of the links.
+%                           %           Currently the only necessary one is "colorlinks=true" and "linkcolor=blue".
+    colorlinks   = true,    %           Colours links instead of ugly boxes
+    urlcolor     = blue,    %           Colour for external hyperlinks
+    linkcolor    = blue,    %           Colour of internal links
+    citecolor    = blue     %           Colour of citations, could be ``red''
+    }
+% % %DO NOT PLACE ANY PACKAGES AFTER THE HYPERREF SET UP
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%                     User Configuration commands
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%% Uncomment the relevant line below if you have tables or figures.
-\haveTablestrue%        Uncomment this if you have tables in your thesis.
-\haveFigurestrue%       Uncomment this if you have figures in your thesis.
-%\haveObjectstrue%       Uncomment this if you have Objects in your thesis. This is almost certainly not the case however.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Below are the commands to set the degree type, department, graduation time, and chair.
-%       Most of these are self explanatory.
-%       Note: The \chair command takes an optional argument for a cochair.
-%           So if John was your chair and Jacob was a cochair, you would use \chair[Jacob]{John}.
-%           If John was your chair and you had no cochair, you can simply use \chair{John}.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\title{$title$}%  Put your title here.
-
-\degreeType{Doctorate of Philosophy}%   Official name of your degree; eg "Doctorate of Philosophy".
-\major{$department$}%                    Your official Department
-\author{$author$}%                  Your Name
-\thesisType{Dissertation}%              Dissertation (PhD) or Thesis (Masters)
-\degreeYear{$date$}%                      Intended graduation year (not the year you submit the thesis)
-\degreeMonth{$month$}%                   Month of graduation should be May, August, or December.
-\chair[$altadvisor$]{$advisor$}%                   Chair and Cochair (see comment block above).
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% For each of the following, type in the name of the file that contains each section.
-%       They are assumed to be tex files, but if they aren't the command takes an optional argument for the extension.
-%       So, you could load dedication.tex as your dedication file using \setDedicationFile{dedication}
-%       You could load dedication.txt instead with \setDedicationFile[txt]{dedication}.
-%       NOTE: For some compilers they may or may not add a .tex to the end of the file automatically.
-%           If you get a "couldn't find dedication.tex.tex" type error, try the command with an empty optional argument,
-%           e.g. \setDedicationFile[]{dedication}
-%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%% These are REQUIRED sections; easiest to do via these commands.
-
-\setDedicationFile{dedicationFile}%                 Dedication Page
-\setAcknowledgementsFile{acknowledgementsFile}%     Acknowledgements Page
-\setAbstractFile{abstractFile}%                     Abstract Page (This should only include the abstract itself)
-\setReferenceFile{referenceFile}{amsplain}%         References. First argument is your bibtex source file
-%                                                       the second argument is your bibtex style file.
-\setBiographicalFile{biographyFile}%                Biography file of the Author (you).
-
-%%% These are NOT required, so only use them if you actually need/have them.
-
-\setAbbreviationsFile{abbreviations}%           Abbreviations Page
-\setAppendixFile{appendix}%                     Appendix Content; hyperlinking might be weird.
-\multipleAppendixtrue%                          Uncomment this if you have more than one appendix,
-%                                                   comment it if you have only one appendix.
-
-
-%%%%%%%                     End of File Assignment
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+%from ismayc/thesisdown, allows for changes made to newer release of pandoc
 % From {rticles}
 $if(csl-refs)$
 \newlength{\csllabelwidth}
@@ -103,34 +104,70 @@ $if(csl-refs)$
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 $endif$
 
+\def\UrlFont{\rmfamily}
+
+\renewcommand{\topfraction}{0.85}
+\renewcommand{\textfraction}{0.1}
+\renewcommand{\floatpagefraction}{0.75}
+
+%this grabs the information provided in your yaml header and formats it using the .cls file
+\SetFullName{$author$}
+\SetThesisType{Dissertation}
+\SetDegreeType{$degree$}
+\SetGradMonth{$month$}
+\SetGradYear{$date$}
+\SetDepartment{$department$}
+\SetChair{$advisor$}
+\SetCochair{$altadvisor$}
+\SetTitle{$title$}
+
+%\include{usersetcommands}
+
 \begin{document}
-%%%% Here you just need to include/input your actual work.
-%       The above files (dedication, acknowledgement, titlepage, etc etc) will all be added for you
-%       using the files you assigned above.
-%       If you want to input the above files manually you can comment out the \setFILE command above
-%       and use \input or \include here. Generally you want to use \include to get your pagebreak.
-%       NOTE: If you input manually you will have to do some/all the formatting manually.
 
+	%\bibliographystyle{IEEEtran} %I think we should let the rmarkdown .csl define the formatting instead -AF
 
+%this creates and formats your title page using the data supplied from your yaml header
+	\maketitle
 
-\include{chapter1}% Modified from old template.
+	\makecopyright
 
-\begin{algorithm}% Example showing the weird "algorithm" environment works...
-    \captionof{algorithm}{Test Caption}
-\end{algorithm}
-\addObject{TestStuff!}%     This is probably the command that a normal author will use to add objects.
+%this creates and formats your dedication page using the data supplied from your yaml header
+	\dedication{$dedication$}
 
-\include{chapter2}% Modified from old template.
-\include{chapter3}% Modified from old template.
+%this creates and formats your acknowledgements using the data supplied from your yaml header
+	\acknowledge{$acknowledgements$}
 
-\chapter{EXAMPLES OF EDITOR/Author TOOLS, TABLES, AND IMAGES}% Notice that we can use chapter/section etc breaks in the master file if we want, and then use \input instead of \include to avoid unneccessary page breaks.
-\input{editorAndAuthorRemarks}%     Stuff about using editorRemark and authorRemark commands
-\input{includingTablesExamples}%    Stuff about using Tables.
-\input{includingImagesExamples}%    Stuff about using Images.
+%The list shown below gives a brief description of the major mathematical symbols defined in this work. For each
+%symbol, the page number corresponds to the place where the symbol is first used.} %
+\tableofcontents %
+\listoftables %
+%\setcounter{lofdepth}{2}
+\listoffigures %
+% Produced list of abbreviations or symbols
+% These commands don't work now, the TOC used to be preserved as a separate tex file
+% hopefully someone who needs these can find a way to fix them
+% \printindex[keylist]{KEY TO ABBREVIATIONS}{KEY TO ABBREVIATIONS}{}
+% \printindex[mathlist]{KEY TO SYMBOLS}{KEY TO SYMBOLS}{%
+% }% Produced list of abbreviations or symbols %
+%\printindex[keylist]{KEY TO ABBREVIATIONS}{KEY TO ABBREVIATIONS}{}
+%\printindex[mathlist]{KEY TO SYMBOLS}{KEY TO SYMBOLS}{%
+  \phantomsection
 
-\include{chapter5}% Modified from old template.
+%this takes the 'abstract:' field from your yaml header and formats it
+  \abstract{$abstract$}
 
-$body$
+%this adds a header which says 'CHAPTER' to the toc
+  \addtocontents{toc}{\protect\addvspace{10pt}\noindent{CHAPTER}\protect\hfill\par}{\pdfbookmark[0]{TABLE OF CONTENTS}{tableofcontents}
+  $body$
+
+%formats and injects the bibliography here
+\bibliography {bib/sample,bib/example}
+
+%this takes the 'preface:' field from your yaml header and uses it as the biography
+%removes the dependency on the .tex file
+  \biography{$preface$}
 
 \end{document}
 
+%------------------------------------------------------------------------------%
