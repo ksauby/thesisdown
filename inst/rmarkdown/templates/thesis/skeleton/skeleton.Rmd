@@ -44,8 +44,7 @@ dedication: |
 
 #Use this section for your biography
 preface: |
-  This is an example of a thesis setup to use the reed thesis document class 
-  (for LaTeX) and the R bookdown package, in general.
+  This section is for your biographical sketch. It should be in third person, past tense. Do not put personal details such as your birthday here. Again, to make a full paragraph you must write at least three sentences.
   
 keywords: keywords #this isn't implemented yet
 subject: subject #also not implemented
