@@ -30,6 +30,7 @@
 \NeedsTeXFormat{LaTeX2e}[2000/06/01]
 \ProvidesClass{ufthesis}
    [2002/09/20 v2.0c UF Thesis Class (Ron Smith)]
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%   Defining Class options and loading required   %
 %%     packages                                    %
@@ -86,6 +87,10 @@
 \RequirePackage{ragged2e}[1999/06/08 v1.02 Ragged2e Package (MS)]%
 \setlength{\RaggedRightRightskip}{0pt plus 4em}%
 \RaggedRight}%
+
+%pandoc started using \tightlist in \begin{itemize} sections, this fixes the error
+\providecommand{\tightlist}{%
+\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%    Font Specification                          %l
@@ -199,6 +204,7 @@
 \newcommand{\GoDouble}{\renewcommand{\baselinestretch}{1.655}%
 \renewcommand{\BaseDiff}{0.655}\normalfont\tiny\normalsize}}{}%
 \GoDouble\GoSingle%
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%   Formatting Chapter Headings                   %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -247,6 +253,7 @@
     \ifthenelse{\boolean{SetDSpace}}{\GoDouble}%
     {\addvspace{\BaseDiff\baselineskip}}%
     }%
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%   Formattin Section Headings                   %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -291,6 +298,7 @@
     {0.1ex}%
     {-1.0em}%
     {\SS@subparafont}}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%  Formatting Generated Lists -- TOC, LOF and LOT %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -360,6 +368,7 @@
      \hb@xt@\@pnumwidth{\hfil\normalfont \normalcolor #5}%
      \par}%
   \fi}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%  Indenting Generated Lists -- TOC, LOF and LOT  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -395,6 +404,7 @@
 \settowidth{\RS@tabindent}{Ta}%
 \newlength{\RS@tabnumwidth}%
 \setlength{\RS@tabnumwidth}{2.3em}%
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%        Table of Contents                        %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -411,6 +421,7 @@
       \@starttoc{toc}%
     \end{simpleenv}%
     \setboolean{SetDSpace}{true}}%
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%        List of Tables                           %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -426,6 +437,7 @@
       \@starttoc{lot}%
     \end{simpleenv}%
     \setboolean{SetDSpace}{true}}%
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%        List of Figures                          %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -447,6 +459,7 @@
   \renewcommand{\@chapapp}{\appendixname}%
  %\renewcommand{\thechapter}{\c@chapter}}% Add this line for one appendix
   \renewcommand{\thechapter}{\@Alph\c@chapter}}% Add this line for multiple appendices
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%        List of References                       %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -502,6 +515,7 @@
     \vspace*{0in}
     \setboolean{SetDSpace}{true}%
     \clearpage}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%        Copyright Page                           %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -517,6 +531,7 @@
     \vfill%
     \setboolean{SetDSpace}{true}%
     \clearpage}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%        Dedication                               %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -548,6 +563,7 @@
       \addcontentsline{toc}{extrachapter}{\acknowledgname}%
       #1%
     \end{simpleenv}}%
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%        Abstract                                 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -569,12 +585,13 @@
     \GradMonth\ \GradYear \\*[\BaseDiff\baselineskip]%
     \end{RS@Cent}%
     {\raggedright Chair: \Chair \\%
-    %\raggedright Cochair: \Cochair \\%uncomment this line if you have a cochair
+    \raggedright Cochair: \Cochair \\%uncomment this line if you have a cochair
     Major: \Department} %
     \setboolean{SetDSpace}{true}%
     \par%
     \GoDouble}%
     {\clearpage}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%        Biographical Sketch                      %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -589,6 +606,7 @@
       \addcontentsline{toc}{extrachapter}{\biographyname}%
       #1%
     \end{simpleenv}}%
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%        Signature Page Stuff                     %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -620,6 +638,7 @@
     #2\par\hrulefill \newline #3\par}\vspace{-\parskip}}%
    \par\vspace{\parskip}
 }
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%        Getting personal information and         %
 %%          defining other miscellaneous commands  %
@@ -650,19 +669,7 @@
 \@onlypreamble{\SetChair}%
 \newcommand*{\SetCochair}[1]{\renewcommand*{\Cochair}{#1}}%uncomment these three lines if you have a Cochair
 \newcommand*{\Cochair}{UNDEFINED Cochair}%Line 2
-\@onlypreamble{\SetCochair}%Line 3
-%%    Adding personal notes to your text
-\newboolean{ShowNotes}% Used to display private notes.
-\setboolean{ShowNotes}{false}%
-\newcommand{\NOTE}[1]{%
-    \ifthenelse{\boolean{ShowNotes}}{%
-    \begin{spacing}{1}%
-    \par\noindent\marginpar{NOTE}%
-    \parbox[t]{\textwidth}{\hrulefill\\%
-    #1\\*[-0.5\baselineskip]%
-    \hspace*{0.1in}\hspace{-0.1in}\hrulefill\\}%
-    \vspace{0.25in}\end{spacing}}{}%
-    }
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%  Footnotes                                      %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -682,6 +689,7 @@
     \parindent 1em%
     \noindent
     \hb@xt@1.8em{\hss\@makefnmark}#1}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%  Figures and Tables and Equations               %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -761,6 +769,7 @@
 \newcommand{\RSpnum}[1]{\makebox[\@pnumwidth][r]{#1}}
 \newcommand{\RSnopnum}[1]{\makebox[\@pnumwidth][r]{}}
 \newcommand{\RSpset}[1]{\RSpnum{#1}}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%  Fixing the enumerate and itemize environments  %
 %%  by updating the general list parameters.       %
@@ -798,6 +807,7 @@
 %% Disabling some unused commands
 \renewcommand{\author}{}
 \renewcommand{\date}{}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%  UF Thesis Local Configuration                  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

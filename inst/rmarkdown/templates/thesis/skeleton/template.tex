@@ -1,6 +1,116 @@
+% This is an adaptation of the the Reed College LaTeX thesis template.
+% Most of the work for the document class was done by Sam Noble (SN),
+% as well as this  template. Later comments etc. by Ben Salzberg (BTS).
+% Additional restructuring and APA support by Jess Youngberg (JY).
+% Your comments and suggestions are more than welcome; please email
+% them to cus@reed.edu
+%
+% See https://www.reed.edu/cis/help/LaTeX/index.html for help. There are a
+% great bunch of help pages there, with notes on
+% getting started, bibtex, etc. Go there and read it if you're not
+% already familiar with LaTeX.
+%
+% Any line that starts with a percent symbol is a comment.
+% They won't show up in the document, and are useful for notes
+% to yourself and explaining commands.
+% Commenting also removes a line from the document;
+% very handy for troubleshooting problems. -BTS
+%
+%
+% This template was originally adapted by Kristen Sauby (KS) in 2017
+% to meet the requirements outlined in the University of Florida
+% Guide for Preparing Theses and Dissertations
+% http://graduateschool.ufl.edu/media/graduate-school/pdf-files/Guide-for-ETDs.pdf
+% http://graduateschool.ufl.edu/about-us/offices/editorial/thesis-and-dissertation/
+% https://helpdesk.ufl.edu/application-support-center/etd-technical-support/ms-word-and-latex-templates/
+%
+% Austin N Fife (AF) made some adaptations to the template and .cls files in 2021 to reduce
+% dependencies on external files, as well as integrating many of the edits from ismayc's depository
+%%
+%% Preamble and comments added by AF
+%%
+% \documentclass{<something>} must begin each LaTeX document
 \documentclass[12pt,final,CPage]{ufthesis}
 
-\include{packages}
+% moved packages from 'packages.tex' to the template file -AF
+% here you define all the packages you wish to use in your paper, the ones shown are not all necessary,
+% but all have purpose and can be very useful, so leave these as default and add packages as necassary
+\usepackage{graphicx}
+%\usepackage[dvipdfmx]{graphicx}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{algpseudocode}
+\usepackage{tabularx}
+\usepackage{url}
+\usepackage[letterpaper,hmargin=1in,vmargin=1in]{geometry}
+\usepackage{lscape}
+%\usepackage{hanging}
+\usepackage{longtable}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+%\usepackage[cmbright]{sfmath} % Comment this line to use Times New Roman Math Typeface
+\usepackage{booktabs}
+\usepackage{subfigure}
+\usepackage{rotating}
+\usepackage{calc}
+\usepackage{setspace}
+%\usepackage{ufenumerate}
+\usepackage{latexsym}
+\usepackage{epsf}
+\usepackage{epsfig}
+\usepackage{euscript}
+\usepackage[format=hang,justification=raggedright,singlelinecheck=0,labelsep=period]{caption}
+\usepackage[numbers,sort&compress]{natbib} %Use this set-up for numbered reference lists
+%\usepackage[authoryear]{natbib} %Use this set-up if you want an un-numbered reference list
+%\usepackage{hypernat}
+\usepackage{siunitx}
+\usepackage[utf8]{inputenc}
+\usepackage{textgreek}
+\usepackage{pdfpages}
+\RequirePackage[linktoc=all]{hyperref}% Use this to provide intra-pdf hyperlinking and better toc
+\hypersetup{%               %           Setup the coloring of the links.
+%                           %           Currently the only necessary one is "colorlinks=true" and "linkcolor=blue".
+    colorlinks   = true,    %           Colours links instead of ugly boxes
+    urlcolor     = blue,    %           Colour for external hyperlinks
+    linkcolor    = blue,    %           Colour of internal links
+    citecolor    = blue     %           Colour of citations, could be ``red''
+    }
+% % %DO NOT PLACE ANY PACKAGES AFTER THE HYPERREF SET UP
+
+%from ismayc/thesisdown, allows for changes made to newer release of pandoc
+% From {rticles}
+$if(csl-refs)$
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+% for Pandoc 2.8 to 2.10.1
+\newenvironment{cslreferences}%
+{$if(csl-hanging-indent)$\setlength{\parindent}{0pt}%
+	\everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces$endif$}%
+{\par}
+% For Pandoc 2.11+
+\newenvironment{CSLReferences}[3] % #1 hanging-ident, #2 entry spacing
+{% don't indent paragraphs
+	\setlength{\parindent}{0pt}
+	% turn on hanging indent if param 1 is 1
+	\ifodd #1 \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces\fi
+	% set entry spacing
+	\ifnum #2 > 0
+	\setlength{\parskip}{#2\baselineskip}
+	\fi
+}%
+{}
+\usepackage{calc} % for calculating minipage widths
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+$endif$
+
+$if(highlighting-macros)$
+$highlighting-macros$
+$endif$
 
 \def\UrlFont{\rmfamily}
 
@@ -8,51 +118,63 @@
 \renewcommand{\textfraction}{0.1}
 \renewcommand{\floatpagefraction}{0.75}
 
-\SetFullName{Kristen Sauby}
+%this grabs the information provided in your yaml header and formats it using the .cls file
+\SetFullName{$author$}
 \SetThesisType{Dissertation}
-\SetDegreeType{Doctor of Philosophy}
-\SetGradMonth{December}
-\SetGradYear{2017}
-\SetDepartment{Electronic Thesis and Dissertations}
-\SetChair{James B. Albury}
-\SetCochair{John W. Carver III}
+\SetDegreeType{$degree$}
+\SetGradMonth{$month$}
+\SetGradYear{$date$}
+\SetDepartment{$department$}
+\SetChair{$advisor$}
+\SetCochair{$altadvisor$}
+\SetTitle{$title$}
 
-\SetTitle{UF ETD \LaTeXe  THESIS AND DISSERTATION TEMPLATE TUTORIAL}
-
-\include{usersetcommands}
+%\include{usersetcommands}
 
 \begin{document}
 
-\bibliographystyle{IEEEtran}
+	%\bibliographystyle{IEEEtran} %I think we should let the rmarkdown .csl define the formatting instead -AF
 
-\maketitle 
-\makecopyright
+%this creates and formats your title page using the data supplied from your yaml header
+	\maketitle
 
-\dedication{dedication}
-\include{acknowledgements}
-\include{TOC}
-\addtocontents{toc}{\protect\addvspace{10pt}\noindent{CHAPTER}\protect\hfill\par}{}
-\phantomsection
+	\makecopyright
 
-% this stuff is in bookdown.yml?
+%this creates and formats your dedication page using the data supplied from your yaml header
+	\dedication{$dedication$}
 
-% \include{tex/abstract}
-% \include{tex/chapter1}
-% \include{tex/chapter2}
-% \include{tex/chapter3}
-% \include{tex/chapter4}
-% \include{tex/chapter5}
-% \include{tex/TwoOrMoreAppendices}
+%this creates and formats your acknowledgements using the data supplied from your yaml header
+	\acknowledge{$acknowledgements$}
 
-% maybe this looks at bookdown.yml
+%The list shown below gives a brief description of the major mathematical symbols defined in this work. For each
+%symbol, the page number corresponds to the place where the symbol is first used.} %
+\tableofcontents %
+\listoftables %
+%\setcounter{lofdepth}{2}
+\listoffigures %
+% Produced list of abbreviations or symbols
+% These commands don't work now, the TOC used to be preserved as a separate tex file
+% hopefully someone who needs these can find a way to fix them
+% \printindex[keylist]{KEY TO ABBREVIATIONS}{KEY TO ABBREVIATIONS}{}
+% \printindex[mathlist]{KEY TO SYMBOLS}{KEY TO SYMBOLS}{%
+% }% Produced list of abbreviations or symbols %
+%\printindex[keylist]{KEY TO ABBREVIATIONS}{KEY TO ABBREVIATIONS}{}
+%\printindex[mathlist]{KEY TO SYMBOLS}{KEY TO SYMBOLS}{%
+  \phantomsection
 
-$body$
+%this takes the 'abstract:' field from your yaml header and formats it
+  \abstract{$abstract$}
 
+%this adds a header which says 'CHAPTER' to the toc
+  \addtocontents{toc}{\protect\addvspace{10pt}\noindent{CHAPTER}\protect\hfill\par}{\pdfbookmark[0]{TABLE OF CONTENTS}{tableofcontents}
+  $body$
 
-
+%formats and injects the bibliography here
 \bibliography {bib/sample,bib/example}
 
-\include{bio}
+%this takes the 'preface:' field from your yaml header and uses it as the biography
+%removes the dependency on the .tex file
+  \biography{$preface$}
 
 \end{document}
 
